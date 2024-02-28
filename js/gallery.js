@@ -71,18 +71,24 @@ const container = document.querySelector(".gallery");
 container.addEventListener("click", handleModalClick);
 
 function handleModalClick(event) {
-	event.preventDefault();
-	
+  event.preventDefault();
+
   if (!event.target.classList.contains("gallery-image")) return;
 
-  const imageWay = event.target.dataset.source; 
-	const currentPicture = images.find(({ original }) => original === imageWay);
-	
+  const imageWay = event.target.dataset.source;
+  const currentPicture = images.find(({ original }) => original === imageWay);
+
   const instance = basicLightbox.create(
     `<div class="modal-window"><img src="${currentPicture.original}" alt="${currentPicture.description}"/></div>`
   );
 
   instance.show();
+
+	const closeModal = instance.element().querySelector(".modal-window");
+	
+  closeModal.addEventListener("click", () => {
+    instance.close();
+  });
 }
 
 const createImgGallery = images =>
